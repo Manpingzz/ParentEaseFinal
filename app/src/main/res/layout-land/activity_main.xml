@@ -59,11 +59,32 @@
             android:layout_height="26dp"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
+<<<<<<< Updated upstream:app/src/main/res/layout-land/activity_main.xml
+=======
+            android:autofillHints="search"
+            android:ems="10"
+            android:minHeight="48dp"
+>>>>>>> Stashed changes:app/src/main/res/layout/activity_home.xml
             app:layout_constraintBottom_toTopOf="@+id/guideline3"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/guideline" />
+            app:layout_constraintTop_toBottomOf="@id/guideline"
+            tools:ignore="SpeakableTextPresentCheck" />
 
+<<<<<<< Updated upstream:app/src/main/res/layout-land/activity_main.xml
+=======
+        <ImageButton
+            android:id="@+id/searchBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:minHeight="48dp"
+            app:layout_constraintStart_toEndOf="@+id/search_tv"
+            app:layout_constraintTop_toBottomOf="@+id/guideline"
+            app:srcCompat="?android:attr/actionModeWebSearchDrawable"
+            tools:ignore="SpeakableTextPresentCheck" />
+
+>>>>>>> Stashed changes:app/src/main/res/layout/activity_home.xml
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline3"
             android:layout_width="wrap_content"
@@ -135,8 +156,15 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
+<<<<<<< Updated upstream:app/src/main/res/layout-land/activity_main.xml
             android:layout_width="729dp"
             android:layout_height="164dp"
+=======
+            android:layout_width="410dp"
+            android:layout_height="369dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+>>>>>>> Stashed changes:app/src/main/res/layout/activity_home.xml
             app:layout_constraintBottom_toTopOf="@+id/guideline6"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -151,8 +179,12 @@
             app:srcCompat="@drawable/ic_baseline_account_circle_24"
             app:layout_constraintTop_toBottomOf="@id/guideline6"
             app:layout_constraintBottom_toBottomOf="@id/guideline7"
+<<<<<<< Updated upstream:app/src/main/res/layout-land/activity_main.xml
             android:layout_marginBottom="4dp"
             android:layout_marginTop="4dp"
+=======
+            android:layout_marginBottom="3dp"
+>>>>>>> Stashed changes:app/src/main/res/layout/activity_home.xml
             app:layout_constraintStart_toEndOf="@id/tv_tips"
             app:layout_constraintEnd_toEndOf="parent" />
 
@@ -161,8 +193,12 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             app:srcCompat="@drawable/ic_baseline_baby_changing_station_24"
+<<<<<<< Updated upstream:app/src/main/res/layout-land/activity_main.xml
             android:layout_marginBottom="4dp"
             android:layout_marginTop="4dp"
+=======
+            android:layout_marginBottom="3dp"
+>>>>>>> Stashed changes:app/src/main/res/layout/activity_home.xml
             app:layout_constraintTop_toBottomOf="@id/guideline6"
             app:layout_constraintBottom_toBottomOf="@id/guideline7"
             app:layout_constraintStart_toEndOf="@id/tv_browse"
@@ -185,8 +221,12 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             app:srcCompat="@drawable/ic_baseline_add_circle_outline_24"
+<<<<<<< Updated upstream:app/src/main/res/layout-land/activity_main.xml
             android:layout_marginBottom="4dp"
             android:layout_marginTop="4dp"
+=======
+            android:layout_marginBottom="3dp"
+>>>>>>> Stashed changes:app/src/main/res/layout/activity_home.xml
             app:layout_constraintTop_toBottomOf="@id/guideline6"
             app:layout_constraintBottom_toBottomOf="@id/guideline7"
             app:layout_constraintStart_toEndOf="@id/tv_nanny"
