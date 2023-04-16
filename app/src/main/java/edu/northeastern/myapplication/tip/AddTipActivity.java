@@ -70,6 +70,7 @@ public class AddTipActivity extends AppCompatActivity {
     private TextView text_myAccount;
     private User user;
     private String filter;
+    private String userAvatarUrl;
     private int picFlag;
 
     /**
@@ -255,7 +256,7 @@ public class AddTipActivity extends AppCompatActivity {
         // get userName
         String userName = user.getUsername();
         // create a tip
-        Tip tip = new Tip(tipId, userId, userName, title, downloadUrl, content, filter);
+        Tip tip = new Tip(tipId, userId, userName, title, downloadUrl, content, filter, userAvatarUrl);
         // post the tip to firebase
         mDatabase.child("users").child(userId).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override

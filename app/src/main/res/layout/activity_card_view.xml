@@ -3,7 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
-
     android:layout_height="wrap_content"
     android:layout_margin="3dp"
     tools:ignore="MissingConstraints">
@@ -16,45 +15,90 @@
         app:cardCornerRadius="5dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="183dp"
+            android:layout_height="match_parent"
             android:layout_marginStart="0dp"
             android:layout_marginTop="0dp">
 
             <ImageView
                 android:id="@+id/imageView"
-                android:layout_width="200dp"
-                android:layout_height="160dp"
+                android:layout_width="180dp"
+                android:layout_height="153dp"
                 android:scaleType="centerCrop"
                 android:src="@drawable/ic_outline_bedroom_baby_24"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/titleView"
-                android:layout_width="200dp"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:maxLines="1"
                 android:padding="0dp"
-                android:paddingStart="10dp"
+                android:paddingStart="1dp"
                 android:text="tip title"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/imageView" />
 
             <TextView
                 android:id="@+id/usernameView"
-                android:layout_width="200dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
                 android:padding="0dp"
-                android:paddingStart="10dp"
+                android:paddingStart="3dp"
                 android:text="username"
                 android:textColor="@color/filter_text_unselected"
                 android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+
+                app:layout_constraintStart_toEndOf="@id/userAvatarImageView"
                 app:layout_constraintTop_toBottomOf="@id/titleView" />
+
+            <ImageView
+                android:id="@+id/userAvatarImageView"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:layout_marginStart="4dp"
+                android:background="@drawable/image_border"
+                android:scaleType="centerCrop"
+                android:src="@drawable/default_profile_image"
+                app:layout_constraintBottom_toBottomOf="@+id/usernameView"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/usernameView"
+                app:layout_constraintVertical_bias="1.0" />
+
+            <!--            <ImageView-->
+            <!--                android:id="@+id/userAvatarImageView"-->
+            <!--                android:layout_width="40dp"-->
+            <!--                android:layout_height="40dp"-->
+            <!--                android:src="@drawable/default_profile_image"-->
+            <!--                android:background="@drawable/image_border"-->
+            <!--                android:scaleType="centerCrop"-->
+            <!--                app:layout_constraintStart_toStartOf="parent"-->
+            <!--                app:layout_constraintTop_toTopOf="parent"-->
+            <!--                app:layout_constraintBottom_toBottomOf="@id/usernameView" />-->
+
+            <!--            <TextView-->
+            <!--                android:id="@+id/usernameView"-->
+            <!--                android:layout_width="200dp"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:padding="0dp"-->
+            <!--                android:paddingStart="10dp"-->
+            <!--                android:text="username"-->
+            <!--                android:textColor="@color/filter_text_unselected"-->
+            <!--                android:textSize="14sp"-->
+            <!--                app:layout_constraintEnd_toEndOf="parent"-->
+            <!--                app:layout_constraintStart_toStartOf="parent"-->
+            <!--                app:layout_constraintTop_toBottomOf="@id/titleView" />-->
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>

@@ -17,11 +17,12 @@ public class Tip implements Parcelable {
     private String pictureUrl;
     private String content;
     private String filter;
+    private String userAvatarUrl;
 
     public Tip() {
     }
 
-    public Tip(String tipId, String userId, String userName, String title, String pictureUrl, String content, String filter) {
+    public Tip(String tipId, String userId, String userName, String title, String pictureUrl, String content, String filter, String userAvatarUrl) {
         this.tipId = tipId;
         this.userId = userId;
         this.userName = userName;
@@ -29,6 +30,7 @@ public class Tip implements Parcelable {
         this.pictureUrl = pictureUrl;
         this.content = content;
         this.filter = filter;
+        this.userAvatarUrl = userAvatarUrl;
     }
 
     protected Tip(Parcel in) {
@@ -39,6 +41,7 @@ public class Tip implements Parcelable {
         pictureUrl = in.readString();
         content = in.readString();
         filter = in.readString();
+        userAvatarUrl = in.readString();
     }
 
     public static final Creator<Tip> CREATOR = new Creator<Tip>() {
@@ -81,6 +84,14 @@ public class Tip implements Parcelable {
         return filter;
     }
 
+    public String getUserAvatarUrl() {
+        return userAvatarUrl;
+    }
+
+    public void setUserAvatarUrl(String userAvatarUrl) {
+        this.userAvatarUrl = userAvatarUrl;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -95,6 +106,8 @@ public class Tip implements Parcelable {
         dest.writeString(pictureUrl);
         dest.writeString(content);
         dest.writeString(filter);
+        dest.writeString(userAvatarUrl);
+
     }
 
     @Override
@@ -107,6 +120,7 @@ public class Tip implements Parcelable {
                 ", pictureUrl='" + pictureUrl + '\'' +
                 ", content='" + content + '\'' +
                 ", filter='" + filter + '\'' +
+                ", userAvatarUrl='" + userAvatarUrl + '\'' +
                 '}';
     }
 }

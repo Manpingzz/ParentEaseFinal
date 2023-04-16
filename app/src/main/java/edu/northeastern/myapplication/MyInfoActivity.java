@@ -1,16 +1,28 @@
 package edu.northeastern.myapplication;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import edu.northeastern.myapplication.entity.User;
 import edu.northeastern.myapplication.nanny.NannyshareMain;
@@ -23,6 +35,7 @@ public class MyInfoActivity extends AppCompatActivity {
     private TextView inputNameTextView;
     private TextView inputEmailTextView;
     private TextView inputLocationTextView;
+    private ImageView userImageView;
     private User currentUser;
 
     private ImageView homeImageView;
@@ -34,8 +47,48 @@ public class MyInfoActivity extends AppCompatActivity {
     private ImageView myAccountImageView;
     private TextView text_myAccount;
     private Button logoutButton;
+    private Button uploadProfileImageButton;
 
     private FirebaseAuth mAuth;
+
+    private static final int SELECT_IMAGE_REQUEST_CODE = 1;
+
+    private final ActivityResultLauncher<Intent> selectImageLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if (result.getResultCode() == Activity.RESULT_OK && result.getData() != null && result.getData().getData() != null) {
+                    Uri filePath = result.getData().getData();
+
+                    // Step 2: 将选择的图片上传到Firebase Storage
+                    StorageReference profileImageRef = FirebaseStorage.getInstance().getReference("profileImages/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + ".jpg");
+                    profileImageRef.putFile(filePath)
+                            .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                @Override
+                                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                    profileImageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                        @Override
+                                        public void onSuccess(Uri uri) {
+                                            String profileImageUrl = uri.toString();
+
+                                            // 更新UI
+                                            Glide.with(getApplicationContext())
+                                                    .load(profileImageUrl)
+                                                    .placeholder(R.drawable.default_profile_image)
+                                                    .into(userImageView);
+
+                                            // Step 3: 更新currentUser的profileImageUrl字段
+                                            FirebaseFirestore.getInstance().collection("users")
+                                                    .document(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                                                    .update("profileImageUrl", profileImageUrl);
+                                        }
+
+                                    });
+                                }
+                            });
+
+                }
+            }
+    );
 
     /**
      * Called when the activity is starting.
@@ -56,6 +109,39 @@ public class MyInfoActivity extends AppCompatActivity {
         inputNameTextView = findViewById(R.id.inputNameTextView);
         inputEmailTextView = findViewById(R.id.inputEmailTextView);
         inputLocationTextView = findViewById(R.id.inputLocationTextView);
+
+        userImageView = findViewById(R.id.userImageView);
+        String profileImageUrl = currentUser.getProfileImageUrl();
+        if (profileImageUrl != null && !profileImageUrl.isEmpty()) {
+            Glide.with(this)
+                    .load(profileImageUrl)
+                    .placeholder(R.drawable.default_profile_image)
+                    .into(userImageView);
+        } else {
+            userImageView.setImageResource(R.drawable.default_profile_image);
+        }
+//        RequestOptions requestOptions = new RequestOptions();
+//        requestOptions.placeholder(R.drawable.default_profile_image);
+//        requestOptions.error(R.drawable.default_profile_image);
+
+        // 使用Glide加载头像
+//        Glide.with(this)
+//                .setDefaultRequestOptions(requestOptions)
+//                .load(profileImageUrl)
+//                .into(userImageView);
+        uploadProfileImageButton = findViewById(R.id.uploadProfileImageButton);
+        uploadProfileImageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                selectImageLauncher.launch(Intent.createChooser(intent, "Select Profile Image"));
+            }
+        });
+
+
+
         homeImageView = findViewById(R.id.iv_home);
         text_home = findViewById(R.id.tv_home);
         nannyShareImageView = findViewById(R.id.iv_nanny);
@@ -95,6 +181,7 @@ public class MyInfoActivity extends AppCompatActivity {
         });
 
     }
+
 
     /**
      * Refresh my info activity.

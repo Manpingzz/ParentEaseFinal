@@ -6,6 +6,8 @@ import edu.northeastern.myapplication.tip.SingleTipActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,16 +16,22 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.CustomTarget;
+import com.bumptech.glide.request.transition.Transition;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHolder> {
 
     private Context context;
     private static List<Tip> tipDataList;
+    private Map<String, Bitmap> userImageCache = new HashMap<>();
 
     public CardViewAdapter(Context context, List<Tip> tipDataList) {
         this.context = context;
@@ -41,12 +49,43 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         Tip currentTip = tipDataList.get(position);
-        holder.title.setText(currentTip.getTitle());
+        String titleText = currentTip.getTitle();
+
+        // set display the max length of title
+        int maxTitleLength = 36;
+        if (titleText.length() > maxTitleLength) {
+            titleText = titleText.substring(0, maxTitleLength) + "...";
+        }
+        holder.title.setText(titleText);
+
+//        holder.title.setText(currentTip.getTitle());
         holder.username.setText(currentTip.getUserName());
 
         System.out.println("current tip: " + currentTip);
 
         String imageUrl = currentTip.getPictureUrl();
+        String userAvatarUrl = currentTip.getUserAvatarUrl(); // 获取用户头像URL
+        String userId = currentTip.getUserId();
+
+        if (userImageCache.containsKey(userId)) {
+            holder.userAvatarImageView.setImageBitmap(userImageCache.get(userId));
+        } else {
+            Glide.with(context)
+                    .asBitmap()
+                    .load(userAvatarUrl)
+                    .centerCrop()
+                    .into(new CustomTarget<Bitmap>() {
+                        @Override
+                        public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+                            holder.userAvatarImageView.setImageBitmap(resource);
+                            userImageCache.put(userId, resource);
+                        }
+
+                        @Override
+                        public void onLoadCleared(@Nullable Drawable placeholder) {
+                        }
+                    });
+        }
 
         Glide.with(context)
                 .load(imageUrl)
@@ -57,6 +96,7 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
     public static class ViewHolder extends RecyclerView.ViewHolder {
         View tipView;
         public ImageView image;
+        public ImageView userAvatarImageView;
         public TextView title;
         public TextView username;
         public View cardView;
@@ -65,6 +105,7 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
             super(itemView);
             tipView = itemView;
             image = itemView.findViewById(R.id.imageView);
+            userAvatarImageView = itemView.findViewById(R.id.userAvatarImageView);
             title = itemView.findViewById(R.id.titleView);
             username = itemView.findViewById(R.id.usernameView);
             cardView = itemView.findViewById(R.id.cardView);

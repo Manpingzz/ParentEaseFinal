@@ -46,6 +46,7 @@ public class RegisterActivity extends AppCompatActivity {
     private String cityName;
     // The current phone's registration token oon FirebaseMessaging Service.
     private String userToken;
+    private String profileImageUrl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,7 +124,7 @@ public class RegisterActivity extends AppCompatActivity {
                         return;
                     }
 
-                    User user = new User(mAuth.getUid(), username, email, cityName, new ArrayList<>(), userToken);
+                    User user = new User(mAuth.getUid(), username, email, cityName, new ArrayList<>(), userToken, profileImageUrl);
                     UserDao userDao = new UserDao();
                     userDao.create(mAuth.getUid(), user);
                     Toast.makeText(RegisterActivity.this, "You have registered successfully.", Toast.LENGTH_SHORT).show();
