@@ -52,7 +52,7 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
         String titleText = currentTip.getTitle();
 
         // set display the max length of title
-        int maxTitleLength = 36;
+        int maxTitleLength = 30;
         if (titleText.length() > maxTitleLength) {
             titleText = titleText.substring(0, maxTitleLength) + "...";
         }
