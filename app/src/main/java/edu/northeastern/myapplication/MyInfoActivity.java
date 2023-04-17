@@ -47,48 +47,45 @@ public class MyInfoActivity extends AppCompatActivity {
     private ImageView myAccountImageView;
     private TextView text_myAccount;
     private Button logoutButton;
-    private Button uploadProfileImageButton;
 
     private FirebaseAuth mAuth;
 
-    private static final int SELECT_IMAGE_REQUEST_CODE = 1;
-
-    private final ActivityResultLauncher<Intent> selectImageLauncher = registerForActivityResult(
-            new ActivityResultContracts.StartActivityForResult(),
-            result -> {
-                if (result.getResultCode() == Activity.RESULT_OK && result.getData() != null && result.getData().getData() != null) {
-                    Uri filePath = result.getData().getData();
-
-                    // Step 2: 将选择的图片上传到Firebase Storage
-                    StorageReference profileImageRef = FirebaseStorage.getInstance().getReference("profileImages/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + ".jpg");
-                    profileImageRef.putFile(filePath)
-                            .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                                @Override
-                                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                    profileImageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                        @Override
-                                        public void onSuccess(Uri uri) {
-                                            String profileImageUrl = uri.toString();
-
-                                            // 更新UI
-                                            Glide.with(getApplicationContext())
-                                                    .load(profileImageUrl)
-                                                    .placeholder(R.drawable.default_profile_image)
-                                                    .into(userImageView);
-
-                                            // Step 3: 更新currentUser的profileImageUrl字段
-                                            FirebaseFirestore.getInstance().collection("users")
-                                                    .document(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                                                    .update("profileImageUrl", profileImageUrl);
-                                        }
-
-                                    });
-                                }
-                            });
-
-                }
-            }
-    );
+//    private final ActivityResultLauncher<Intent> selectImageLauncher = registerForActivityResult(
+//            new ActivityResultContracts.StartActivityForResult(),
+//            result -> {
+//                if (result.getResultCode() == Activity.RESULT_OK && result.getData() != null && result.getData().getData() != null) {
+//                    Uri filePath = result.getData().getData();
+//
+//                    // Step 2: 将选择的图片上传到Firebase Storage
+//                    StorageReference profileImageRef = FirebaseStorage.getInstance().getReference("profileImages/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + ".jpg");
+//                    profileImageRef.putFile(filePath)
+//                            .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+//                                @Override
+//                                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+//                                    profileImageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+//                                        @Override
+//                                        public void onSuccess(Uri uri) {
+//                                            String profileImageUrl = uri.toString();
+//
+//                                            // 更新UI
+//                                            Glide.with(getApplicationContext())
+//                                                    .load(profileImageUrl)
+//                                                    .placeholder(R.drawable.default_profile_image)
+//                                                    .into(userImageView);
+//
+//                                            // Step 3: 更新currentUser的profileImageUrl字段
+//                                            FirebaseFirestore.getInstance().collection("users")
+//                                                    .document(FirebaseAuth.getInstance().getCurrentUser().getUid())
+//                                                    .update("profileImageUrl", profileImageUrl);
+//                                        }
+//
+//                                    });
+//                                }
+//                            });
+//
+//                }
+//            }
+//    );
 
     /**
      * Called when the activity is starting.
@@ -129,16 +126,6 @@ public class MyInfoActivity extends AppCompatActivity {
 //                .setDefaultRequestOptions(requestOptions)
 //                .load(profileImageUrl)
 //                .into(userImageView);
-        uploadProfileImageButton = findViewById(R.id.uploadProfileImageButton);
-        uploadProfileImageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setType("image/*");
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                selectImageLauncher.launch(Intent.createChooser(intent, "Select Profile Image"));
-            }
-        });
 
 
 

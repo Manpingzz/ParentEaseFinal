@@ -87,16 +87,6 @@
         app:layout_constraintTop_toTopOf="@id/guideline1"
         tools:srcCompat="@tools:sample/avatars" />
 
-    <Button
-        android:id="@+id/uploadProfileImageButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Upload Profile Image"
-        android:layout_marginTop="38dp"
-        app:layout_constraintEnd_toEndOf="@id/guideline8"
-        app:layout_constraintStart_toStartOf="@+id/guideline7"
-        app:layout_constraintTop_toBottomOf="@id/guideline9"/>
-
 
     <TextView
         android:id="@+id/nameTextView"
@@ -166,11 +156,10 @@
         android:backgroundTint="@android:color/holo_red_dark"
         android:text="Logout"
         android:textColor="@android:color/white"
-        app:layout_constraintEnd_toEndOf="@id/guideline8"
-        app:layout_constraintTop_toBottomOf="@+id/uploadProfileImageButton"
-        app:layout_constraintStart_toStartOf="@id/guideline7"
         app:layout_constraintBottom_toTopOf="@id/guideline6"
-        />
+        app:layout_constraintTop_toBottomOf="@id/guideline9"
+        app:layout_constraintEnd_toEndOf="@id/guideline8"
+        app:layout_constraintStart_toStartOf="@id/guideline7" />
 
     <include
         android:id="@+id/bottom_navigation"

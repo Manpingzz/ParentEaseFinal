@@ -58,34 +58,14 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
         }
         holder.title.setText(titleText);
 
-//        holder.title.setText(currentTip.getTitle());
         holder.username.setText(currentTip.getUserName());
 
-        System.out.println("current tip: " + currentTip);
+        holder.userAvatarImageView.setImageResource(R.drawable.default_profile_image);
 
         String imageUrl = currentTip.getPictureUrl();
-        String userAvatarUrl = currentTip.getUserAvatarUrl(); // 获取用户头像URL
         String userId = currentTip.getUserId();
 
-        if (userImageCache.containsKey(userId)) {
-            holder.userAvatarImageView.setImageBitmap(userImageCache.get(userId));
-        } else {
-            Glide.with(context)
-                    .asBitmap()
-                    .load(userAvatarUrl)
-                    .centerCrop()
-                    .into(new CustomTarget<Bitmap>() {
-                        @Override
-                        public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
-                            holder.userAvatarImageView.setImageBitmap(resource);
-                            userImageCache.put(userId, resource);
-                        }
-
-                        @Override
-                        public void onLoadCleared(@Nullable Drawable placeholder) {
-                        }
-                    });
-        }
+        holder.userAvatarImageView.setImageResource(R.drawable.default_profile_image);
 
         Glide.with(context)
                 .load(imageUrl)
